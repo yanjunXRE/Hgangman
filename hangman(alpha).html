@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+<style>
+body {
+	color: salmon;
+}
+table {
+	background-color: antiquewhite;
+}
+</style>
+</head>
+<body>
+<header>
+  <table border="2">
+    <tr rowspan="2">
+      <td><label>Score:</label>
+        <input type="text" id="score"  style="width:1.5em;position:relative;" />
+        <br/>
+        <label>Health:</label>
+        <input type="text" id="health" style="width:1.5em;position:relative;" />
+        <br/></td>
+      <td><input type="text" id="ans" style="width:18.7em" value="----Hangman----"/>
+        <br/>
+        <input type="text" id="letter" style="width:18.7em" value="Click Start to get a word"/></td>
+      <td><button onclick="start()">Start</button></td>
+    </tr>
+    <tr style="padding:40px">
+      <td colspan="3"><button id="a" onclick="press('a')">A</button>
+        <button id="b" onclick="press('b')">B</button>
+        <button id="c" onclick="press('c')">C</button>
+        <button id="d" onclick="press('d')">D</button>
+        <button id="e" onclick="press('e')">E</button>
+        <button id="f" onclick="press('f')">F</button>
+        <button id="g" onclick="press('g')">G</button>
+        <button id="h" onclick="press('h')">H</button>
+        <button id="i" onclick="press('i')">I</button>
+        <button id="j" onclick="press('j')">J</button>
+        <button id="k" onclick="press('k')">K</button>
+        <button id="l" onclick="press('l')">L</button>
+        <button id="m" onclick="press('m')">M</button></td>
+    </tr>
+    <tr>
+      <td colspan="3"><button id="n" onclick="press('n')">N</button>
+        <button id="o" onclick="press('o')">O</button>
+        <button id="p" onclick="press('p')">P</button>
+        <button id="q" onclick="press('q')">Q</button>
+        <button id="r" onclick="press('r')">R</button>
+        <button id="s" onclick="press('s')">S</button>
+        <button id="t" onclick="press('t')">T</button>
+        <button id="u" onclick="press('u')">U</button>
+        <button id="v" onclick="press('v')">V</button>
+        <button id="w" onclick="press('w')">W</button>
+        <button id="x" onclick="press('x')">X</button>
+        <button id="y" onclick="press('y')">Y</button>
+        <button id="z" onclick="press('z')">Z</button></td>
+    </tr>
+  </table>
+</header>
+<script type="text/javascript">
+			var score = document.getElementById("score");
+			score.value=0;
+			var alpha;
+			var WrongLetter;
+			var sentence;
+			var live;
+			var num;
+			var letter;
+			var used;
+			var word;
+			var words;
+			var remainingLetters;
+			var answerArray;
+			var i;
+            var j;
+			var status=0;
+			live=document.getElementById("health");
+			live.value=6;
+			function start(){ //error is found because is in the different folder
+	       		 try{
+				if(status==0){
+					 status=1;
+				WrongLetter=0;
+	          sentence = document.getElementById("letter");
+					sentence.value="";
+					letter=['a','b','c','d','e','f','g','h','i',
+           'j','k','l','m','n','o','p','q','r',
+           's','t','u','v','w','x','y','z'];
+	 used=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,];
+			live.value=6;
+ var word=["alcohol","despicable","apple","juices","gamer","ordinary","seaweed","strawberry","whiteboard","shoes","engine","fire","transport","genuis","help","track","trade","yellow","black","elegant","elephant","gratitude","alpine","mountain",
+		 "dead","jacket","sweater","janitor","gentleman","rule","rain","kick","siren","main","cane","candies","puppies","family","friend","generous"
+		 ,"female","remake","quest","motocycle","endure","fantasy","mathematics","mining","ceiling","oxygen","alaphabet","sentiment"
+					  
+					  ];//create a arrary
+		      words =word[Math.floor(Math.random()*word.length)];
+	  remainingLetters=words.length;
+		 alpha=document.getElementById("ans");
+	//pick a random words 
+		      answerArray=[];
+						
+		     // create blank for the words
+		     for(var i=0; i<words.length;i++){
+				if(words.charAt(0)==words.charAt(i)||words.charAt(words.length-1)==words.charAt(i)){
+					  answerArray[i]=words.charAt(i);
+					 remainingLetters--;
+					
+				 }
+				 else{
+				 
+			      answerArray[i]="_";
+				
+		     
+				  
+				
+				
+				 }
+			  alpha.value=answerArray.join("    ");
+				 
+			}
+			}else{
+				throw"Game in play";
+			}
+					 }
+				catch(err){
+				alert(err);
+			}
+				 }
+			
+		
+			function press(key){
+				try{
+				if(status==1){
+					
+			 if(key==words.charAt(0)||key==words.charAt(words.length-1)){
+					used[letter.indexOf(key)]=1;
+					 
+					 
+				 }
+				 
+				
+				
+				
+				if(used[letter.indexOf(key)]==1)	
+				throw"Letter Used";
+					while(remainingLetters>0){
+			if(used[letter.indexOf(key)]==1){
+				alpha.value=answerArray.join("    ");
+				
+				break;
+				
+			}else{
+				
+				
+				
+			
+				for(var j=0;j<words.length;j++){
+					
+				if(words[j]==key){
+				answerArray[j]= key;
+				remainingLetters--;
+					
+					
+					
+			}
+				
+					
+					
+					
+			else{
+				WrongLetter++;
+				if(WrongLetter==words.length){
+					
+				sentence.value=sentence.value+" "+key;
+				
+				  live.value--;
+				}
+				
+			}
+					
+					}
+				used[letter.indexOf(key)]=1;
+		
+			
+			WrongLetter=0;
+
+			if(live.value==0){
+				sentence.value="Game over.The word is "+words;
+				score.value--;
+				status=0;			
+			}}
+					}
+		if(remainingLetters===0){
+			alpha.value=answerArray.join("    ");
+			score.value++;
+			sentence.value="Congrauations. The word is "+words;		
+			status=0;	
+		}}}catch(err2){
+					alert(err2);
+			
+				}}
+</script>
+</body>
+</html>
